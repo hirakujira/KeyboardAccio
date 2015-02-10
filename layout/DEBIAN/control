@@ -1,0 +1,11 @@
+Package: tw.hiraku.keyboardaccio
+Priority: optional
+Section: Tweaks
+Maintainer: Hiraku <dev@hiraku.tw>
+Architecture: iphoneos-arm
+Version: 2.0
+Description: Quick keyboard switcher betwen input modes
+Name: Keyboard Accio
+Depends: mobilesubstrate, firmware (>= 6.0)
+Author: Hiraku <dev@hiraku.tw>
+Depiction: Quick keyboard switcher betwen input modes
