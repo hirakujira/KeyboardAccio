@@ -9,6 +9,11 @@ Features
 * Supports 3rd-party keyboards (iOS 8+)
 * Supports iOS 6 ~ 9
 
+#Install
+================
+Keyboard Accio is available on BigBoss Cydia Repo. You can find and install it easily with Cydia.
+
+
 License
 ================
 MIT.
