@@ -1,13 +1,13 @@
 Keyboard Accio
 ================
-* A tweak makes it easier to switch between keyboards
+* A tweak that makes it easier to switch between iOS keyboards
 
 Features
 ================
-* Tap "Globe" key to switch between first and second keyboards
-* Hold "Globe" key to access other keyboards
-* Supports 3rd-party keyboards (iOS 8)
-* Supports iOS 6 ~ 8
+* Tap "Globe" key to switch between first and second keyboard
+* Hold "Globe" key to access any other keyboards
+* Supports 3rd-party keyboards (iOS 8+)
+* Supports iOS 6 ~ 9
 
 License
 ================
