@@ -7,7 +7,7 @@ Features
 * Tap "Globe" key to switch between first and second keyboard
 * Hold "Globe" key to access any other keyboards
 * Supports 3rd-party keyboards (iOS 8+)
-* Supports iOS 6 ~ 9
+* Supports iOS 6 ~ 10
 
 #Install
 ================
