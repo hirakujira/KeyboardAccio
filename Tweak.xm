@@ -16,14 +16,24 @@
 
 //==================================================================================
 
-NSString *iOS7Result(UIKeyboardImpl *object, int a, int b) {
+NSString *iOS7Result(UIKeyboardImpl *object, int a, int b) 
+{
 	NSArray* activeInputModes = [[UIKeyboardInputModeController sharedInputModeController] activeInputModes];
+	if ([activeInputModes count] == 1) 
+	{
+		return [activeInputModes[0] identifier];
+	}
 	return ([[object inputModeLastChosen] isEqualToString:[activeInputModes[0] identifier]]) ? [activeInputModes[a] identifier] : [activeInputModes[b] identifier];
 }
 
-UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, int b) {
+UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, int b) 
+{
 	UIKeyboardInputMode *currentInputMode = object.currentInputMode;
 	NSArray *activeInputModes = [object activeInputModes];
+	if ([activeInputModes count] == 1) 
+	{
+		return activeInputModes[0];
+	}
 	return ([currentInputMode.identifier isEqualToString:[activeInputModes[0] identifier]]) ? activeInputModes[a] : activeInputModes[b];
 }
 
@@ -31,18 +41,21 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 
 %hook UIKeyboardImpl
 %group GiOS6
--(NSString *)lastUsedInputMode {
+-(NSString *)lastUsedInputMode 
+{
 	NSArray *activeInputModes = [[UIKeyboardInputModeController sharedInputModeController] activeInputModes];
 	return [activeInputModes[0] identifier];
 }
 %end
 
 %group GiOS7
--(NSString *)lastUsedInputMode {
+-(NSString *)lastUsedInputMode 
+{
 	return iOS7Result(self, 0, 1);
 }
 
--(NSString *)nextInputModeToUse { 
+-(NSString *)nextInputModeToUse 
+{ 
 	return iOS7Result(self, 1, 0);
 }
 %end
@@ -50,24 +63,31 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 
 %group GiOS8 
 %hook UIKeyboardInputModeController
--(UIKeyboardInputMode *)lastUsedInputMode {
+-(UIKeyboardInputMode *)lastUsedInputMode 
+{
 	return iOS8Result(self, 0, 1);
 }
 
--(UIKeyboardInputMode *)nextInputModeToUse {
+-(UIKeyboardInputMode *)nextInputModeToUse 
+{
 	return iOS8Result(self, 1, 0);
 }
 %end
 %end
 //==================================================================================
-%ctor {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+%ctor 
+{
     if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0)
+	{
     	%init(GiOS6);
+	}
     else if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0 && kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_8_0)
+	{
 	    %init(GiOS7);
+	}
 	else if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
+	{
 		%init(GiOS8);
-
-    [pool release];
+	}
+	%init;
 }
