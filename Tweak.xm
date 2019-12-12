@@ -6,12 +6,12 @@
 
 @interface UIKeyboardInputModeController : NSObject
 @property(retain) UIKeyboardInputMode* currentInputMode;
--(NSArray *)activeInputModes;
-+(UIKeyboardInputModeController *)sharedInputModeController;
+- (NSArray *)activeInputModes;
++ (UIKeyboardInputModeController *)sharedInputModeController;
 @end
 
 @interface UIKeyboardImpl : NSObject
--(NSString *)inputModeLastChosen;
+- (NSString *)inputModeLastChosen;
 @end
 
 //==================================================================================
@@ -41,7 +41,7 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 
 %hook UIKeyboardImpl
 %group GiOS6
--(NSString *)lastUsedInputMode 
+- (NSString *)lastUsedInputMode 
 {
 	NSArray *activeInputModes = [[UIKeyboardInputModeController sharedInputModeController] activeInputModes];
 	return [activeInputModes[0] identifier];
@@ -49,12 +49,12 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 %end
 
 %group GiOS7
--(NSString *)lastUsedInputMode 
+- (NSString *)lastUsedInputMode 
 {
 	return iOS7Result(self, 0, 1);
 }
 
--(NSString *)nextInputModeToUse 
+- (NSString *)nextInputModeToUse 
 { 
 	return iOS7Result(self, 1, 0);
 }
@@ -63,29 +63,31 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 
 %group GiOS8 
 %hook UIKeyboardInputModeController
--(UIKeyboardInputMode *)lastUsedInputMode 
+- (UIKeyboardInputMode *)lastUsedInputMode 
 {
 	return iOS8Result(self, 0, 1);
 }
 
--(UIKeyboardInputMode *)nextInputModeToUse 
+- (UIKeyboardInputMode *)nextInputModeToUse 
 {
 	return iOS8Result(self, 1, 0);
 }
 %end
 %end
+
 //==================================================================================
+
 %ctor 
 {
-    if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0)
+	if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0)
 	{
-    	%init(GiOS6);
+		%init(GiOS6);
 	}
-    else if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0 && kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_8_0)
+	else if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0 && kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_8_0)
 	{
-	    %init(GiOS7);
+		%init(GiOS7);
 	}
-	else if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
+	else
 	{
 		%init(GiOS8);
 	}
