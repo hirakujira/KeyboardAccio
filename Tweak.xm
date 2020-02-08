@@ -19,22 +19,26 @@
 NSString *iOS7Result(UIKeyboardImpl *object, int a, int b) 
 {
 	NSArray* activeInputModes = [[UIKeyboardInputModeController sharedInputModeController] activeInputModes];
+	UIKeyboardInputMode *firstInputMode = [activeInputModes objectAtIndex:0];
 	if ([activeInputModes count] == 1) 
 	{
-		return [activeInputModes[0] identifier];
+		return [firstInputMode identifier];
 	}
-	return ([[object inputModeLastChosen] isEqualToString:[activeInputModes[0] identifier]]) ? [activeInputModes[a] identifier] : [activeInputModes[b] identifier];
+	int index = [[object inputModeLastChosen] isEqualToString:[firstInputMode identifier]] ? a : b;
+	return [[activeInputModes objectAtIndex:index] identifier];
 }
 
 UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, int b) 
 {
 	UIKeyboardInputMode *currentInputMode = object.currentInputMode;
 	NSArray *activeInputModes = [object activeInputModes];
+	UIKeyboardInputMode *firstInputMode = [activeInputModes objectAtIndex:0];
 	if ([activeInputModes count] == 1) 
 	{
-		return activeInputModes[0];
+		return firstInputMode;
 	}
-	return ([currentInputMode.identifier isEqualToString:[activeInputModes[0] identifier]]) ? activeInputModes[a] : activeInputModes[b];
+	int index = [currentInputMode.identifier isEqualToString:[firstInputMode identifier]] ? a : b;
+	return [activeInputModes objectAtIndex:index];
 }
 
 //==================================================================================
@@ -44,7 +48,10 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 - (NSString *)lastUsedInputMode 
 {
 	NSArray *activeInputModes = [[UIKeyboardInputModeController sharedInputModeController] activeInputModes];
-	return [activeInputModes[0] identifier];
+	return [[activeInputModes objectAtIndex:0] identifier];
+}
+- (BOOL)globeKeyDisplaysAsEmojiKey {
+	return NO;
 }
 %end
 
@@ -75,6 +82,17 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 %end
 %end
 
+%group GiOS13
+%hook UIKeyboardLayoutStar
+- (BOOL)showsDedicatedEmojiKeyAlongsideGlobeButton {
+	return NO;
+}
+- (NSString *)internationalKeyDisplayStringOnEmojiKeyboard {
+	return nil;
+}
+%end
+%end
+
 //==================================================================================
 
 %ctor 
@@ -90,6 +108,10 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 	else
 	{
 		%init(GiOS8);
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_13_0)
+		{
+			%init(GiOS13);
+		}
 	}
 	%init;
 }
