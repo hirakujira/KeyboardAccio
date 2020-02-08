@@ -8,6 +8,7 @@ KeyboardAccio_CFLAGS = -F$(SYSROOT)/System/Library/CoreServices -fobjc-arc
 SDKVERSION = 10.2
 SYSROOT = $(THEOS)/sdks/iPhoneOS10.2.sdk
 GO_EASY_ON_ME = 1
+FINALPACKAGE = 1
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
