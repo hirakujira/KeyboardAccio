@@ -1,4 +1,5 @@
 #import <firmware.h>
+#import <UIKit/UIKit.h>
 
 @interface UIKeyboardInputMode : UITextInputMode
 @property(retain) NSString *identifier;

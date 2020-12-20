@@ -16,4 +16,4 @@ sync: stage
 	cp .theos/_/Library/MobileSubstrate/DynamicLibraries/KeyboardAccio.dylib /opt/simject/KeyboardAccio.dylib
 	cp .theos/_/Library/MobileSubstrate/DynamicLibraries/KeyboardAccio.plist /opt/simject/KeyboardAccio.plist
 	ldid -S /opt/simject/KeyboardAccio.dylib
-	respring_simulator
+	resim
