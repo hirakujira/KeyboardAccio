@@ -44,8 +44,8 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 
 //==================================================================================
 
-%hook UIKeyboardImpl
 %group GiOS6
+%hook UIKeyboardImpl
 - (NSString *)lastUsedInputMode 
 {
 	NSArray *activeInputModes = [[UIKeyboardInputModeController sharedInputModeController] activeInputModes];
@@ -55,8 +55,10 @@ UIKeyboardInputMode *iOS8Result(UIKeyboardInputModeController *object, int a, in
 	return NO;
 }
 %end
+%end
 
 %group GiOS7
+%hook UIKeyboardImpl
 - (NSString *)lastUsedInputMode 
 {
 	return iOS7Result(self, 0, 1);

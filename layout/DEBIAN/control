@@ -3,7 +3,7 @@ Priority: optional
 Section: Tweaks
 Maintainer: Hiraku <dev@hiraku.tw>
 Architecture: iphoneos-arm
-Version: 2.4.1
+Version: 2.4.5
 Description: Quick keyboard switcher betwen input modes
 Name: Keyboard Accio
 Depends: mobilesubstrate, firmware (>= 5.0)

@@ -4,8 +4,8 @@ KeyboardAccio_FRAMEWORKS = UIKit
 KeyboardAccio_CFLAGS = -F$(SYSROOT)/System/Library/CoreServices -fobjc-arc
 
 TARGET = simulator:clang
-SDKVERSION = 10.3
-SYSROOT = /opt/theos/sdks/iPhoneSimulator10.3.sdk
+SDKVERSION = 13.7
+SYSROOT = /opt/theos/sdks/iPhoneSimulator13.7.sdk
 
 GO_EASY_ON_ME = 1
 
