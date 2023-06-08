@@ -1,5 +1,11 @@
-ARCHS = armv7 arm64 arm64e
-TARGET = iphone:clang::6.0
+ifeq ($(THEOS_PACKAGE_SCHEME),rootless)
+	ARCHS = arm64 arm64e
+	TARGET = iphone:16.2:15.0
+else
+	ARCHS = armv7 arm64 arm64e
+	TARGET = iphone:12.1.2:6.0
+endif
+
 
 TWEAK_NAME = KeyboardAccio
 KeyboardAccio_OBJCC_FILES = Tweak.xm
